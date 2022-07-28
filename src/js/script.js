@@ -30,6 +30,9 @@
     constructor(){
       const thisBooksList = this;
 
+      thisBooksList.filters = [];
+      thisBooksList.favoriteBooks = [];
+
       thisBooksList.initData();
       thisBooksList.getElements();
       thisBooksList.render();
@@ -49,8 +52,7 @@
       thisBooksList.bookListContainer = document.querySelector(select.listOf.booklist);
       thisBooksList.imageListContainer = document.querySelector(select.listOf.booklist);
       thisBooksList.filtersContainer = document.querySelector(select.listOf.filters);
-      thisBooksList.filters = [];
-      thisBooksList.favoriteBooks = [];
+      
 
     }
 
@@ -137,7 +139,7 @@
         const clickedElement = event.target;
   
         /* check if it's a checkbox that was clicked in the whole filters container - event.target */
-        if(event.target.tagName === 'INPUT' && event.target.type === 'checkbox' && event.target.name === 'filter') {
+        if(clickedElement.tagName === 'INPUT' && clickedElement.type === 'checkbox' && clickedElement.name === 'filter') {
   
           //console.log(event.target.value);
           
@@ -163,10 +165,10 @@
     /* write function to see if the book should be hiddden or not */
     filterBooks() {
       const thisBooksList = this;
-
+      
       /* for every book */
       for(const book of thisBooksList.data) {
-        thisBooksList.bookImageID = document.querySelector(select.containerOf.image + '[data-id="' + book.id + '"]');
+        const selected = document.querySelector(select.containerOf.image + '[data-id="' + book.id + '"]');
         let shouldBeHidden = false;
 
         /* for every book check if the filter fits the book - if not, it should be hidden */
@@ -180,9 +182,9 @@
         /* if the filter fits the book - hide it, if not - make it visible */
      
         if(shouldBeHidden) {
-          thisBooksList.bookImageID.classList.add('hidden');
+          selected.classList.add('hidden');
         }else{
-          thisBooksList.bookImageID.classList.remove('hidden');
+          selected.classList.remove('hidden');
         }
       }
     }
